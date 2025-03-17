@@ -9,12 +9,27 @@
 </head>
 
 <body>
+
+    <button id="iniciarJuego">Iniciar Juego</button>
     <div class="container">
         <div id="rosco"></div>
         <div id="tempo">180</div>
         <img id="logo" src="img/logo.png" alt="Logo">
     </div>
+
+     <!-- Pregunta y respuesta -->
+     <div class="pregunta-container">
+        <p id="pregunta">Cargando pregunta...</p>
+        <input type="text" id="respuesta" placeholder="Escribe tu respuesta">
+        <button onclick="verificarRespuesta()">Responder</button>
+        <button onclick="pasarPalabra()">Pasapalabra</button>
+    </div>
+
+    <!-- Marcadores -->
+    <p>Aciertos: <span id="aciertos">0</span> | Errores: <span id="errores">0</span></p>
+</div>
 </body>
 <script src="js/programa.js"></script>
+<script src="js/scripts.js"></script>
 
 </html>

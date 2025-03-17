@@ -23,15 +23,21 @@ document.addEventListener("DOMContentLoaded", () => {
 /**
  * Inicia el temporizador
  */
+let intervaloTemporizador;
 function iniciarTemporizador() {
-    let temp = 300;
-    setInterval(() => {
-        if (temp > 0) {
-            +(document.getElementById("tempo").textContent)--;
-            temp--;
+    let tiempoRestante = 180; // 3 minutos
+
+    // Asegurar que no haya otro temporizador en marcha
+    clearInterval(intervaloTemporizador);
+
+    intervaloTemporizador = setInterval(() => {
+        if (tiempoRestante > 0) {
+            document.getElementById("tempo").textContent = tiempoRestante;
+            tiempoRestante--;
+        } else {
+            clearInterval(intervaloTemporizador); // Detener el temporizador cuando llegue a 0
+            alert("Tiempo agotado. Fin del juego.");
+            acabarJuego();
         }
-        else {
-            return;
-        }
-    }, 1000)
+    }, 1000);
 }

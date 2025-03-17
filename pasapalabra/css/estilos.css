@@ -72,3 +72,14 @@ body {
     left: 21.5vw;
     top: 41vh;
 }
+
+
+/*cambios de colores al rosco*/
+
+.correcto {
+    background-color: green !important;
+}
+
+.incorrecto {
+    background-color: red !important;
+}
