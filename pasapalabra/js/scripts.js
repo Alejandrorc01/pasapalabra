@@ -16,9 +16,7 @@ function cambiarColorRosco(letra, estado) {
 async function cargarPreguntas() {
   try {
     let respuesta = await fetch("preguntas.json");
-
-    // Inicializar el conjunto con todas las preguntas
-    preguntas.forEach((_, i) => palabrasPendientes.add(i));
+    preguntas = await respuesta.json();
 
     mostrarPreguntas();
   } catch (error) {
@@ -52,7 +50,7 @@ function verificarRespuesta() {
     cambiarColorRosco(letraActual, "incorrecto"); //  Cambiar color a rojo
     palabrasPendientes.delete(indicePreguntas); // También eliminar si falla
   }
-
+  
   actualizarMarcador();
   siguientePregunta();
 }
@@ -81,31 +79,33 @@ function actualizarMarcador() {
   document.getElementById("errores").textContent = errores;
 }
 
-//iniciar juego
-
-document.getElementById("iniciarJuego").addEventListener("click", () => {
-  // Ocultar el botón de inicio
-  document.getElementById("iniciarJuego").style.display = "none";
-
-  // Mostrar los elementos del juego
-  document.getElementById("rosco").style.display = "block";
-  document.getElementById("tempo").style.display = "block";
-  document.getElementById("logo").style.display = "block";
-  document.querySelector(".pregunta-container").style.display = "block";
-  //document.getElementById("marcador").style.display = "block";
-
-  // Cargar preguntas y iniciar el temporizador
-  cargarPreguntas();
-  iniciarTemporizador();
-});
-
 // función para acabar el juego
 function acabarJuego() {
   alert(`Juego terminado. 
   Aciertos: ${aciertos} 
   Errores: ${errores}`);
-  
+
   actualizarMarcador();
 }
 
+/**
+ * Inicia el temporizador
+ */
+let intervaloTemporizador;
+function iniciarTemporizador() {
+  let tiempoRestante = 150; // 3 minutos
 
+  // Asegurar que no haya otro temporizador en marcha
+  clearInterval(intervaloTemporizador);
+
+  intervaloTemporizador = setInterval(() => {
+    if (tiempoRestante >= 0) {
+      document.getElementById("tempo").textContent = tiempoRestante;
+      tiempoRestante--;
+    } else {
+      clearInterval(intervaloTemporizador); // Detener el temporizador cuando llegue a 0
+      alert("Tiempo agotado. Fin del juego.");
+      acabarJuego();
+    }
+  }, 1000);
+}
