@@ -66,11 +66,52 @@ body {
     /*Aquí la animación*/
 }
 
+#logo-container{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3vh;
+    left: 22vw;
+    top: 40vh;
+}
 
-#logo{
+#preguntas-container{
+    display: none;
     position: absolute;
     left: 21.5vw;
-    top: 41vh;
+    top: 35vh;
+    width: 31.55vw;
+    height: 8vw;
+    border: 4px solid white;
+    font-weight: bold;
+    background-color: rgb(110, 207, 240);
+    font-size: 1.25em;
+    padding: 2vw 2vh;
+    color: white;
+    border-radius: 10px;
+    font-family: LemonMilk;
+}
+
+#iniciarJuego{
+    width: 15vw;
+    height: 5vh;
+    border: 2px solid white;
+    color: white;
+    background-color: rgb(110, 207, 240);
+    font-size: 120%;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: LemonMilk;
+    border-radius: 10px;
+    transition: .4s ease;
+}
+
+#iniciarJuego:hover{
+    cursor: pointer;
+    transform: scale(1.15);
 }
 
 
