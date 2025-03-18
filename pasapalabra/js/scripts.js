@@ -15,8 +15,7 @@ function cambiarColorRosco(letra, estado) {
 // Cargar preguntas desde el archivo JSON
 async function cargarPreguntas() {
   try {
-    let respuesta = await fetch("preguntas.json"); // Asegúrate de que este archivo está en la misma carpeta
-    preguntas = await respuesta.json();
+    let respuesta = await fetch("preguntas.json");
 
     // Inicializar el conjunto con todas las preguntas
     preguntas.forEach((_, i) => palabrasPendientes.add(i));
@@ -40,7 +39,7 @@ function mostrarPreguntas() {
 // Función que verifica la respuesta del usuario
 function verificarRespuesta() {
   let respuestaUsuario = document.getElementById("respuesta").value.trim().toLowerCase();
-  let letraActual = preguntas[indicePreguntas].letra.toUpperCase(); // ✅ Se obtiene la letra actual
+  let letraActual = preguntas[indicePreguntas].letra.toUpperCase(); // Se obtiene la letra actual
 
   if (respuestaUsuario === preguntas[indicePreguntas].respuesta) {
     aciertos++;
@@ -93,7 +92,7 @@ document.getElementById("iniciarJuego").addEventListener("click", () => {
   document.getElementById("tempo").style.display = "block";
   document.getElementById("logo").style.display = "block";
   document.querySelector(".pregunta-container").style.display = "block";
-  document.getElementById("marcador").style.display = "block";
+  //document.getElementById("marcador").style.display = "block";
 
   // Cargar preguntas y iniciar el temporizador
   cargarPreguntas();
