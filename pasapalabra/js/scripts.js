@@ -2,7 +2,6 @@ let preguntas = [];
 let indicePreguntas = 0;
 let aciertos = 0;
 let errores = 0;
-let palabrasPendientes = new Set();
 
 // Función para cambiar el color de las letras en el rosco
 function cambiarColorRosco(letra, estado) {
@@ -28,7 +27,8 @@ async function cargarPreguntas() {
 function mostrarPreguntas() {
   if (indicePreguntas < preguntas.length) {
     document.getElementById("pregunta").textContent =
-      preguntas[indicePreguntas].pregunta; //  Corrección: se usa "pregunta" en lugar de "value"
+      preguntas[indicePreguntas].pregunta;
+    document.getElementById("respuesta").value = "";
   } else {
     acabarJuego();
   }
@@ -36,23 +36,27 @@ function mostrarPreguntas() {
 
 // Función que verifica la respuesta del usuario
 function verificarRespuesta() {
-  let respuestaUsuario = document.getElementById("respuesta").value.trim().toLowerCase();
+  let respuestaUsuario = document
+    .getElementById("respuesta")
+    .value.trim()
+    .toLowerCase();
   let letraActual = preguntas[indicePreguntas].letra.toUpperCase(); // Se obtiene la letra actual
 
   if (respuestaUsuario === preguntas[indicePreguntas].respuesta) {
     aciertos++;
     alert("¡Correcto! ");
     cambiarColorRosco(letraActual, "correcto"); //  Cambiar color a verde
-    palabrasPendientes.delete(indicePreguntas); // Eliminar del conjunto de pendientes
   } else {
     errores++;
-    alert(` Incorrecto. La respuesta correcta era: ${preguntas[indicePreguntas].respuesta}`);
+    alert(
+      ` Incorrecto. La respuesta correcta era: ${preguntas[indicePreguntas].respuesta}`
+    );
     cambiarColorRosco(letraActual, "incorrecto"); //  Cambiar color a rojo
-    palabrasPendientes.delete(indicePreguntas); // También eliminar si falla
   }
-  
+  preguntas.splice(indicePreguntas, 1);
+
   actualizarMarcador();
-  siguientePregunta();
+  mostrarPreguntas();
 }
 
 // función para pasar palabra
@@ -62,14 +66,10 @@ function pasarPalabra() {
 
 // función para pasar a la siguiente pregunta (ciclo circular)
 function siguientePregunta() {
-  do {
+  if (preguntas.length > 0) {
     indicePreguntas = (indicePreguntas + 1) % preguntas.length;
-  } while (
-    !palabrasPendientes.has(indicePreguntas) &&
-    palabrasPendientes.size > 0
-  );
+  }
 
-  document.getElementById("respuesta").value = "";
   mostrarPreguntas();
 }
 
