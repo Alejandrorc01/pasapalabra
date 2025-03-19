@@ -25,7 +25,7 @@ async function cargarPreguntas() {
 
 //  Función para mostrar la pregunta actual
 function mostrarPreguntas() {
-  if (indicePreguntas < preguntas.length) {
+  if (preguntas.length > 0) {
     document.getElementById("pregunta").textContent =
       preguntas[indicePreguntas].pregunta;
     document.getElementById("respuesta").value = "";
@@ -54,6 +54,10 @@ function verificarRespuesta() {
     cambiarColorRosco(letraActual, "incorrecto"); //  Cambiar color a rojo
   }
   preguntas.splice(indicePreguntas, 1);
+
+  if(indicePreguntas >= preguntas.length){
+    indicePreguntas = 0;
+  }
 
   actualizarMarcador();
   mostrarPreguntas();
