@@ -66,6 +66,7 @@ function verificarRespuesta() {
 
 // función para pasar palabra
 function pasarPalabra() {
+  document.getElementById(preguntas[indicePreguntas].letra).style.animation = "none";
   siguientePregunta();
 }
 
