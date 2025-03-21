@@ -29,6 +29,7 @@ function mostrarPreguntas() {
     document.getElementById("pregunta").textContent =
       preguntas[indicePreguntas].pregunta;
     document.getElementById("respuesta").value = "";
+    document.getElementById(preguntas[indicePreguntas].letra).style.animation = "parpadeo 2s ease-in-out 0.5s infinite normal forwards running";
   } else {
     acabarJuego();
   }
@@ -80,7 +81,6 @@ function siguientePregunta() {
 // función para actualizar el marcador
 function actualizarMarcador() {
   document.getElementById("aciertos").textContent = aciertos;
-  document.getElementById("errores").textContent = errores;
 }
 
 // función para acabar el juego
