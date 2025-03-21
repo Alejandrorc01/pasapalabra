@@ -113,3 +113,68 @@ function iniciarTemporizador() {
     }
   }, 1000);
 }
+
+
+/*function agregarJugador(nombre) {
+  if (!nombre) {
+      alert("Escribe un nombre válido.");
+      return;
+  }
+
+  let jugadorExistente = jugadores.find(j => j.nombre === nombre);
+
+  if (!jugadorExistente) {
+      let nuevoJugador = { nombre: nombre, aciertos: 0, errores: 0 };
+      jugadores.push(nuevoJugador);
+      guardarJugadores();
+  }
+
+  seleccionarJugador(nombre);
+}
+
+// Función para seleccionar un jugador y resetear el marcador
+function seleccionarJugador(nombre) {
+  jugadorActual = nombre;
+  localStorage.setItem("jugadorActual", nombre);
+  
+  // Reiniciar puntajes
+  let jugador = jugadores.find(j => j.nombre === jugadorActual);
+  aciertos = jugador.aciertos;
+  errores = jugador.errores;
+  
+  resetearJuego();
+}
+
+// Función para actualizar la puntuación del jugador actual
+function actualizarPuntuacion(correcto) {
+  let jugador = jugadores.find(j => j.nombre === jugadorActual);
+  if (jugador) {
+      if (correcto) {
+          jugador.aciertos++;
+          aciertos++;
+      } else {
+          jugador.errores++;
+          errores++;
+      }
+      guardarJugadores();
+      actualizarMarcador();
+  }
+}
+
+// Función para guardar los jugadores en localStorage
+function guardarJugadores() {
+  localStorage.setItem("jugadores", JSON.stringify(jugadores));
+}
+
+/*
+
+function resetearJuego() {
+  aciertos = 0;
+  errores = 0;
+  indicePreguntas = 0;
+  
+  actualizarMarcador();
+  alert(`Nuevo jugador seleccionado: ${jugadorActual}. Todo se ha reiniciado.`);
+  cargarPreguntas();
+}
+*/
