@@ -4,6 +4,27 @@ let aciertos = 0;
 let errores = 0;
 let palabrasPendientes = new Set();
 
+function generarRosco(){
+  const rosco = document.getElementById("rosco");
+    const letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
+    const radius = 400;
+    const xPos = 150;
+    const yPos = 150;
+
+    letters.forEach((letter, index) => {
+        let angle = (index / letters.length) * (2 * Math.PI);
+        let x = xPos + radius * Math.cos(angle) - 20;
+        let y = yPos + radius * Math.sin(angle) - 20;
+        const div = document.createElement("div");
+        div.id = letter;
+        div.textContent = letter;
+        div.classList.add("letra");
+        div.style.left = `${y}px`;
+        div.style.top = `${-x}px`;
+        rosco.appendChild(div);
+    });
+}
+
 // Función para cambiar el color de las letras en el rosco
 function cambiarColorRosco(letra, estado) {
   let letraElemento = document.getElementById(letra.toUpperCase());
@@ -27,6 +48,7 @@ async function cargarPreguntas() {
 //  Función para mostrar la pregunta actual
 function mostrarPreguntas() {
   if (indicePreguntas < preguntas.length) {
+    document.getElementById(preguntas[indicePreguntas].letra).style.animation = "parpadeo 2s ease-in-out 0.5s infinite normal forwards running";
     document.getElementById("pregunta").textContent =
       preguntas[indicePreguntas].pregunta; //  Corrección: se usa "pregunta" en lugar de "value"
   } else {
@@ -76,7 +98,6 @@ function siguientePregunta() {
 // función para actualizar el marcador
 function actualizarMarcador() {
   document.getElementById("aciertos").textContent = aciertos;
-  document.getElementById("errores").textContent = errores;
 }
 
 // función para acabar el juego
@@ -84,8 +105,9 @@ function acabarJuego() {
   alert(`Juego terminado. 
   Aciertos: ${aciertos} 
   Errores: ${errores}`);
-
-  actualizarMarcador();
+  
+  document.getElementById("logo-container").style.display = "flex";
+  document.getElementById("preguntas-container").style.display = "none";
 }
 
 /**
@@ -93,7 +115,7 @@ function acabarJuego() {
  */
 let intervaloTemporizador;
 function iniciarTemporizador() {
-  let tiempoRestante = 150; // 3 minutos
+  let tiempoRestante = 150; // 2:30 minutos
 
   // Asegurar que no haya otro temporizador en marcha
   clearInterval(intervaloTemporizador);
