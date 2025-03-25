@@ -152,3 +152,42 @@ body {
 .incorrecto {
     background-color: red !important;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+tr {
+    background-color: #f5f0f0;
+}
+
+tr:hover {
+    background-color: #ddd;
+    transition: 0.3s;
+    font-size: larger;
+}
+
+h1 {
+    color: red;
+    font-size: 22px;
+    text-align: center;
+}
