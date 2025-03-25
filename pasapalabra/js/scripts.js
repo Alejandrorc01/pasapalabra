@@ -1,19 +1,9 @@
 let preguntas = [];
 let jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
 let indicePreguntas = 0;
-let aciertos = JSON.parse(localStorage.getItem("aciertos")) || 0;
-let errores = JSON.parse(localStorage.getItem("errores")) || 0;
+let aciertos = 0;
+let errores = 0;
 let jugadorActual = 0;
-
-function resetearJuego() {
-  aciertos = 0;
-  errores = 0;
-  indicePreguntas = 0;
-  
-  actualizarMarcador();
-  alert(`Nuevo jugador seleccionado: ${jugadorActual}. Todo se ha reiniciado.`);
-  cargarPreguntas();
-}
 
 // Función para cambiar el color de las letras en el rosco
 function cambiarColorRosco(letra, estado) {
@@ -41,7 +31,8 @@ function mostrarPreguntas() {
     document.getElementById("pregunta").textContent =
       preguntas[indicePreguntas].pregunta;
     document.getElementById("respuesta").value = "";
-    document.getElementById(preguntas[indicePreguntas].letra).style.animation = "parpadeo 2s ease-in-out 0.5s infinite normal forwards running";
+    document.getElementById(preguntas[indicePreguntas].letra).style.animation =
+      "parpadeo 2s ease-in-out 0.5s infinite normal forwards running";
   } else {
     acabarJuego();
   }
@@ -56,19 +47,19 @@ function verificarRespuesta() {
   let letraActual = preguntas[indicePreguntas].letra.toUpperCase(); // Se obtiene la letra actual
 
   if (respuestaUsuario === preguntas[indicePreguntas].respuesta) {
-    aciertos++;
     alert("¡Correcto! ");
+    actualizarPuntuacion(true);
     cambiarColorRosco(letraActual, "correcto"); //  Cambiar color a verde
   } else {
-    errores++;
     alert(
       ` Incorrecto. La respuesta correcta era: ${preguntas[indicePreguntas].respuesta}`
     );
+    actualizarPuntuacion(false);
     cambiarColorRosco(letraActual, "incorrecto"); //  Cambiar color a rojo
   }
   preguntas.splice(indicePreguntas, 1);
 
-  if(indicePreguntas >= preguntas.length){
+  if (indicePreguntas >= preguntas.length) {
     indicePreguntas = 0;
   }
 
@@ -78,7 +69,8 @@ function verificarRespuesta() {
 
 // función para pasar palabra
 function pasarPalabra() {
-  document.getElementById(preguntas[indicePreguntas].letra).style.animation = "none";
+  document.getElementById(preguntas[indicePreguntas].letra).style.animation =
+    "none";
   siguientePregunta();
 }
 
@@ -125,23 +117,22 @@ function iniciarTemporizador() {
   }, 1000);
 }
 
-
 function agregarJugador(nombre) {
   while (!nombre) {
-      nombre = prompt("Escribe un nombre válido.");
+    nombre = prompt("Escribe un nombre válido.");
   }
 
-  let jugadorExistente = jugadores.find(j => j.nombre === nombre);
+  let jugadorExistente = jugadores.find((j) => j.nombre === nombre);
 
-  while(jugadorExistente){
+  while (jugadorExistente) {
     nombre = prompt("Este usuario ya existe. Ponte otro nombre");
-    jugadorExistente = jugadores.find(j => j.nombre === nombre);
+    jugadorExistente = jugadores.find((j) => j.nombre === nombre);
   }
 
   if (!jugadorExistente) {
-      let nuevoJugador = { nombre: nombre, aciertos: 0, errores: 0 };
-      jugadores.push(nuevoJugador);
-      guardarJugadores();
+    let nuevoJugador = { nombre: nombre, aciertos: 0, errores: 0 };
+    jugadores.push(nuevoJugador);
+    guardarJugadores();
   }
 
   localStorage.setItem("jugadorActual", nombre);
@@ -150,17 +141,17 @@ function agregarJugador(nombre) {
 
 // Función para actualizar la puntuación del jugador actual
 function actualizarPuntuacion(correcto) {
-  let jugador = jugadores.find(j => j.nombre === jugadorActual);
+  let jugador = jugadores.find((j) => j.nombre === jugadorActual);
   if (jugador) {
-      if (correcto) {
-          jugador.aciertos++;
-          aciertos++;
-      } else {
-          jugador.errores++;
-          errores++;
-      }
-      guardarJugadores();
-      actualizarMarcador();
+    if (correcto) {
+      jugador.aciertos++;
+      aciertos++;
+    } else {
+      jugador.errores++;
+      errores++;
+    }
+    guardarJugadores();
+    actualizarMarcador();
   }
 }
 
@@ -169,23 +160,48 @@ function guardarJugadores() {
   localStorage.setItem("jugadores", JSON.stringify(jugadores));
 }
 
+function crearTabla() {
+  let div = document.getElementById("tabla-container");
 
-function crearTabla(){
-  let tabla = document.getElementById("tablaRes");
-  for(let j of jugadores){
-    let tr = document.createElement("tr");
-    let td1 = document.createElement("td");
-    let td2 = document.createElement("td");
-    let td3 = document.createElement("td");
+  if (jugadores.length >= 1) {
+    let tabla = document.createElement("table");
+    let trh = document.createElement("tr");
+    let th1 = document.createElement("th");
+    th1.textContent = "Jugador";
+    let th2 = document.createElement("th");
+    th2.textContent = "Aciertos";
+    let th3 = document.createElement("th");
+    th3.textContent = "Errores";
 
-    td1.innerHTML = j.nombre;
-    td2.innerHTML = j.aciertos;
-    td3.innerHTML = j.errores;
+    
+    trh.appendChild(th1);
+    trh.appendChild(th2);
+    trh.appendChild(th3);
+    tabla.appendChild(trh);
+    for (let j of jugadores) {
+      let tr = document.createElement("tr");
+      let td1 = document.createElement("td");
+      let td2 = document.createElement("td");
+      let td3 = document.createElement("td");
 
-    tr.appendChild(td1);
-    tr.appendChild(td2);
-    tr.appendChild(td3);
+      td1.innerHTML = j.nombre;
+      td2.innerHTML = j.aciertos;
+      td3.innerHTML = j.errores;
 
-    tabla.insertAdjacentElement("beforeend", tr);
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      tr.appendChild(td3);
+
+      tabla.appendChild(tr);
+    }
+    div.insertAdjacentElement("afterbegin", tabla);
   }
+  else{
+    if(!div.querySelector("h1")){
+      let h1 = document.createElement("h1");
+      h1.innerHTML = "Ahora mismo no hay jugadores registrados.";
+      div.insertAdjacentElement("afterbegin", h1);
+    }
+  }
+
 }

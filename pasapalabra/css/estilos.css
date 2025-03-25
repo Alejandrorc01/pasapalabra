@@ -85,10 +85,6 @@ body {
     transition: .4s ease;
 }
 
-#mostrarRes{
-    display: none;
-}
-
 .boton:hover{
     cursor: pointer;
     transform: scale(1.15);
