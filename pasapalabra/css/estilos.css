@@ -16,8 +16,14 @@
 }
 
 body {
-    background-color: #2d3f58;
-}
+    background: radial-gradient(circle at top, rgba(110, 207, 240, 0.6), #4b87db 40%, #2d3f58 90%);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    }
 
 #rosco{
     position: absolute;
