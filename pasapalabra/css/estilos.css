@@ -94,6 +94,13 @@ body {
     transform: scale(1.15);
 }
 
+#tabla-container{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2vh;
+}
 
 #cont-aciertos{
     position: relative;

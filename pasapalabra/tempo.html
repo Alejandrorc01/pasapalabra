@@ -15,13 +15,23 @@
             <div id="logo-container">
                 <img id="logo" src="img/logo.png" alt="Logo">
                 <div id="iniciarJuego" class="boton">Iniciar Juego</div>
-                <!-- <input id="mostrarRes" class="boton" type="submit" value="Mostrar Resultados"> -->
+                <div id="mostrarRes" class="boton">Mostrar Resultados</div>
             </div>
             <div id="preguntas-container">
                 <p id="pregunta">Cargando pregunta...</p>
                 <input type="text" id="respuesta" placeholder="Escribe tu respuesta">
                 <button onclick="verificarRespuesta()">Responder</button>
                 <button onclick="pasarPalabra()">Pasapalabra</button>
+            </div>
+            <div id="tabla-container">
+                <table id="tablaRes">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Aciertos</th>
+                        <th>Errores</th>
+                    </tr>
+                </table>
+                <div id="volver" class="boton">Volver</div>
             </div>
         </div>
         <div id="cont-aciertos">

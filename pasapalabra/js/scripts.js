@@ -1,45 +1,18 @@
 let preguntas = [];
+let jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
 let indicePreguntas = 0;
 let aciertos = JSON.parse(localStorage.getItem("aciertos")) || 0;
-let errores = 0;
-let jugadores = JSON.parse(localStorage.getItem("jugadores")) || [];
-let jugadorActual = localStorage.getItem("jugadorActual") || null;
-
-function inicializar(){
-  crearRosco();
-  let nombre = prompt("Introduce el nombre del jugador:");
-  agregarJugador(nombre);
-  resetearJuego();
-}
+let errores = JSON.parse(localStorage.getItem("errores")) || 0;
+let jugadorActual = 0;
 
 function resetearJuego() {
-    aciertos = 0;
-    errores = 0;
-    indicePreguntas = 0;
-
-    actualizarMarcador();
-    cargarPreguntas();
-}
-
-function crearRosco() {
-  const rosco = document.getElementById("rosco");
-  const letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
-  const radius = 400;
-  const xPos = 150;
-  const yPos = 150;
-
-  letters.forEach((letter, index) => {
-    let angle = (index / letters.length) * (2 * Math.PI);
-    let x = xPos + radius * Math.cos(angle) - 20;
-    let y = yPos + radius * Math.sin(angle) - 20;
-    const div = document.createElement("div");
-    div.id = letter;
-    div.textContent = letter;
-    div.classList.add("letra");
-    div.style.left = `${y}px`;
-    div.style.top = `${-x}px`;
-    rosco.appendChild(div);
-  });
+  aciertos = 0;
+  errores = 0;
+  indicePreguntas = 0;
+  
+  actualizarMarcador();
+  alert(`Nuevo jugador seleccionado: ${jugadorActual}. Todo se ha reiniciado.`);
+  cargarPreguntas();
 }
 
 // Función para cambiar el color de las letras en el rosco
@@ -55,6 +28,8 @@ async function cargarPreguntas() {
   try {
     let respuesta = await fetch("preguntas.json");
     preguntas = await respuesta.json();
+
+    mostrarPreguntas();
   } catch (error) {
     console.error("Error al cargar las preguntas:", error);
   }
@@ -93,7 +68,7 @@ function verificarRespuesta() {
   }
   preguntas.splice(indicePreguntas, 1);
 
-  if (indicePreguntas >= preguntas.length) {
+  if(indicePreguntas >= preguntas.length){
     indicePreguntas = 0;
   }
 
@@ -127,16 +102,18 @@ function acabarJuego() {
   Aciertos: ${aciertos} 
   Errores: ${errores}`);
 
-  actualizarMarcador();
+  window.location.reload();
 }
 
 /**
  * Inicia el temporizador
  */
 function iniciarTemporizador() {
-  let tiempoRestante = 150; // 3 minutos
+  let tiempoRestante = 149; // 2:30 minutos
 
-  setInterval(() => {
+  // Asegurar que no haya otro temporizador en marcha
+
+  let intervaloTemporizador = setInterval(() => {
     if (tiempoRestante >= 0) {
       document.getElementById("tempo").textContent = tiempoRestante;
       tiempoRestante--;
@@ -151,33 +128,64 @@ function iniciarTemporizador() {
 
 function agregarJugador(nombre) {
   while (!nombre) {
-    nombre = prompt("Escribe un nombre válido.");
+      nombre = prompt("Escribe un nombre válido.");
   }
 
   let jugadorExistente = jugadores.find(j => j.nombre === nombre);
 
   while(jugadorExistente){
-    nombre = prompt("Ese nombre ya está escogido.");
+    nombre = prompt("Este usuario ya existe. Ponte otro nombre");
     jugadorExistente = jugadores.find(j => j.nombre === nombre);
   }
 
   if (!jugadorExistente) {
-    let nuevoJugador = { nombre: nombre, aciertos: 0, errores: 0 };
-    jugadores.push(nuevoJugador);
-    guardarJugadores();
+      let nuevoJugador = { nombre: nombre, aciertos: 0, errores: 0 };
+      jugadores.push(nuevoJugador);
+      guardarJugadores();
   }
 
-  seleccionarJugador(nombre);
+  localStorage.setItem("jugadorActual", nombre);
+  jugadorActual = nombre;
 }
 
-// Función para seleccionar un jugador y resetear el marcador
-function seleccionarJugador(nombre) {
-  jugadorActual = nombre;
-  localStorage.setItem("jugadorActual", nombre);
-  localStorage.setItem("aciertos", 0);
+// Función para actualizar la puntuación del jugador actual
+function actualizarPuntuacion(correcto) {
+  let jugador = jugadores.find(j => j.nombre === jugadorActual);
+  if (jugador) {
+      if (correcto) {
+          jugador.aciertos++;
+          aciertos++;
+      } else {
+          jugador.errores++;
+          errores++;
+      }
+      guardarJugadores();
+      actualizarMarcador();
+  }
 }
 
 // Función para guardar los jugadores en localStorage
 function guardarJugadores() {
   localStorage.setItem("jugadores", JSON.stringify(jugadores));
+}
+
+
+function crearTabla(){
+  let tabla = document.getElementById("tablaRes");
+  for(let j of jugadores){
+    let tr = document.createElement("tr");
+    let td1 = document.createElement("td");
+    let td2 = document.createElement("td");
+    let td3 = document.createElement("td");
+
+    td1.innerHTML = j.nombre;
+    td2.innerHTML = j.aciertos;
+    td3.innerHTML = j.errores;
+
+    tr.appendChild(td1);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+
+    tabla.insertAdjacentElement("beforeend", tr);
+  }
 }
