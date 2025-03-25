@@ -162,46 +162,46 @@ function guardarJugadores() {
 
 function crearTabla() {
   let div = document.getElementById("tabla-container");
+  jugadores.sort((a, b) => b.aciertos - a.aciertos);
 
   if (jugadores.length >= 1) {
-    let tabla = document.createElement("table");
-    let trh = document.createElement("tr");
-    let th1 = document.createElement("th");
-    th1.textContent = "Jugador";
-    let th2 = document.createElement("th");
-    th2.textContent = "Aciertos";
-    let th3 = document.createElement("th");
-    th3.textContent = "Errores";
+    if (!div.querySelector("table")) {
+      let tabla = document.createElement("table");
+      let trh = document.createElement("tr");
+      let th1 = document.createElement("th");
+      th1.textContent = "Jugador";
+      let th2 = document.createElement("th");
+      th2.textContent = "Aciertos";
+      let th3 = document.createElement("th");
+      th3.textContent = "Errores";
 
-    
-    trh.appendChild(th1);
-    trh.appendChild(th2);
-    trh.appendChild(th3);
-    tabla.appendChild(trh);
-    for (let j of jugadores) {
-      let tr = document.createElement("tr");
-      let td1 = document.createElement("td");
-      let td2 = document.createElement("td");
-      let td3 = document.createElement("td");
+      trh.appendChild(th1);
+      trh.appendChild(th2);
+      trh.appendChild(th3);
+      tabla.appendChild(trh);
+      for (let j of jugadores) {
+        let tr = document.createElement("tr");
+        let td1 = document.createElement("td");
+        let td2 = document.createElement("td");
+        let td3 = document.createElement("td");
 
-      td1.innerHTML = j.nombre;
-      td2.innerHTML = j.aciertos;
-      td3.innerHTML = j.errores;
+        td1.innerHTML = j.nombre;
+        td2.innerHTML = j.aciertos;
+        td3.innerHTML = j.errores;
 
-      tr.appendChild(td1);
-      tr.appendChild(td2);
-      tr.appendChild(td3);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
 
-      tabla.appendChild(tr);
+        tabla.appendChild(tr);
+      }
+      div.insertAdjacentElement("afterbegin", tabla);
     }
-    div.insertAdjacentElement("afterbegin", tabla);
-  }
-  else{
-    if(!div.querySelector("h1")){
+  } else {
+    if (!div.querySelector("h1")) {
       let h1 = document.createElement("h1");
       h1.innerHTML = "Ahora mismo no hay jugadores registrados.";
       div.insertAdjacentElement("afterbegin", h1);
     }
   }
-
 }
