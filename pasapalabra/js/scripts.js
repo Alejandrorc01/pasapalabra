@@ -101,7 +101,7 @@ function acabarJuego() {
  * Inicia el temporizador
  */
 function iniciarTemporizador() {
-  let tiempoRestante = 19; // 2:30 minutos
+  let tiempoRestante = 149; // 2:30 minutos
   let tempoElemento = document.getElementById("tempo");
 
   // Asegurarse de limpiar parpadeo si reinicias juego
