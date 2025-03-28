@@ -113,6 +113,7 @@ body {
 }
 
 #cont-aciertos {
+  display: none;
   position: relative;
   top: 70vh;
   left: 70vw;
@@ -259,18 +260,14 @@ h1 {
   }
 
   #tempo {
+    width: 10vw;
+    height: 10vw;
     font-size: 2rem;
   }
-  
+
   #aciertos {
     width: 10vw;
-  }
-}
-
-
-@media screen and (max-width: 1000px) {
-  #tempo,
-  #cont-aciertos {
-    display: none;
+    left: 0.35vw;
+    top: 9vh;
   }
 }
