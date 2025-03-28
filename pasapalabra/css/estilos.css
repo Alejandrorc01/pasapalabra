@@ -266,3 +266,11 @@ h1 {
     width: 10vw;
   }
 }
+
+
+@media screen and (max-width: 1000px) {
+  #tempo,
+  #cont-aciertos {
+    display: none;
+  }
+}

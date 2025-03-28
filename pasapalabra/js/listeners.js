@@ -31,7 +31,9 @@ document.getElementById("iniciarJuego").addEventListener("click", () => {
   if (jugadores.length >= 1) {
     document.getElementById("mostrarRes").display = "block";
   }
-
+  //al iniciar siempre enseñar timer y aciertos
+  document.getElementById("tempo").style.display = "flex"; 
+  document.getElementById("cont-aciertos").style.display = "flex";
   // Cargar preguntas y iniciar el temporizador
   cargarPreguntas();
   iniciarTemporizador();
