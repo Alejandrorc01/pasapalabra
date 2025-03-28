@@ -218,6 +218,19 @@ h1 {
   text-align: center;
 }
 
+@keyframes parpadeo-rojo {
+  0%   { background-color: red; }
+  50%  { background-color: white; color: red; }
+  100% { background-color: red; }
+}
+
+.parpadeo-final {
+  animation: parpadeo-rojo 1s infinite;
+  color: white !important;
+  border-color: white !important;
+}
+
+
 @media screen and (max-width: 1050px) {
   #rosco {
     left: 35vw;

@@ -101,21 +101,30 @@ function acabarJuego() {
  * Inicia el temporizador
  */
 function iniciarTemporizador() {
-  let tiempoRestante = 149; // 2:30 minutos
+  let tiempoRestante = 19; // 2:30 minutos
+  let tempoElemento = document.getElementById("tempo");
 
-  // Asegurar que no haya otro temporizador en marcha
+  // Asegurarse de limpiar parpadeo si reinicias juego
+  tempoElemento.classList.remove("parpadeo-final");
 
   let intervaloTemporizador = setInterval(() => {
     if (tiempoRestante >= 0) {
-      document.getElementById("tempo").textContent = tiempoRestante;
+      tempoElemento.textContent = tiempoRestante;
+
+      // Activar parpadeo si quedan 10 segundos o menos
+      if (tiempoRestante <= 10) {
+        tempoElemento.classList.add("parpadeo-final");
+      }
+
       tiempoRestante--;
     } else {
-      clearInterval(intervaloTemporizador); // Detener el temporizador cuando llegue a 0
+      clearInterval(intervaloTemporizador);
       alert("Tiempo agotado. Fin del juego.");
       acabarJuego();
     }
   }, 1000);
 }
+
 
 function agregarJugador(nombre) {
   while (!nombre) {
