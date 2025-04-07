@@ -127,7 +127,7 @@ body {
 #cont-aciertos {
   display: none;
   position: relative;
-  top: 70vh;
+  top: 45vh;
   left: 70vw;
   width: fit-content;
 }
